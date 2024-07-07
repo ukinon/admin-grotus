@@ -5,6 +5,8 @@ import "@/css/satoshi.css";
 import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
+import { Poppins } from "next/font/google";
+const poppins = Poppins({ subsets: ["latin"], weight: "300" });
 
 export default function RootLayout({
   children,
@@ -22,7 +24,11 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body suppressHydrationWarning={true}>
+      <head>
+        <title>Grotus Admin</title>
+        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+      </head>
+      <body suppressHydrationWarning={true} className={poppins.className}>
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
           {loading ? <Loader /> : children}
         </div>
