@@ -26,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <title>Grotus Admin</title>
-        <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="/images/grotusIcon.png" />
       </head>
       <body suppressHydrationWarning={true} className={poppins.className}>
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
