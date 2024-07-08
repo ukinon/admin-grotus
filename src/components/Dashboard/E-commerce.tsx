@@ -4,8 +4,8 @@ import React from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartTwo from "../Charts/ChartTwo";
 import ChatCard from "../Chat/ChatCard";
-import TableOne from "../Tables/TableOne";
 import CardDataStats from "../CardDataStats";
+import ProductTable from "../Tables/ProductTable";
 
 const MapOne = dynamic(() => import("@/components/Maps/MapOne"), {
   ssr: false,
@@ -112,7 +112,7 @@ const ECommerce: React.FC = () => {
           <ChartThree />
         </div>
         <div className="col-span-12 2xl:col-span-8">
-          <TableOne />
+          <ProductTable />
         </div>
       </div>
     </>
