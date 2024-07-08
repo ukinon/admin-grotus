@@ -24,11 +24,12 @@ const DropdownUser = () => {
           <Image
             width={112}
             height={112}
-            src={"/https://via.placeholder.com/112x112"}
+            src={"https://via.placeholder.com/112x112"}
             style={{
               width: "auto",
               height: "auto",
             }}
+            className="rounded-full"
             alt="User"
           />
         </span>

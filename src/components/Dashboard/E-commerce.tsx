@@ -105,11 +105,13 @@ const ECommerce: React.FC = () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid w-full grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+      <div className="mt-4 grid w-full grid-cols-12 gap-4 md:mt-6 md:gap-3 2xl:mt-7.5 2xl:gap-7.5">
         <ChartOne />
         <ChartTwo />
-        <ChartThree />
-        <div className="col-span-12 xl:col-span-7">
+        <div className="col-span-12 md:col-span-12 2xl:col-span-4">
+          <ChartThree />
+        </div>
+        <div className="col-span-12 2xl:col-span-8">
           <TableOne />
         </div>
       </div>
