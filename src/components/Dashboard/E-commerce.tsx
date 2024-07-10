@@ -6,6 +6,7 @@ import ChartTwo from "../Charts/ChartTwo";
 import ChatCard from "../Chat/ChatCard";
 import CardDataStats from "../CardDataStats";
 import ProductTable from "../Tables/ProductTable";
+import TransactionTable from "../Tables/TransactionTable";
 
 const MapOne = dynamic(() => import("@/components/Maps/MapOne"), {
   ssr: false,
@@ -112,7 +113,7 @@ const ECommerce: React.FC = () => {
           <ChartThree />
         </div>
         <div className="col-span-12 2xl:col-span-8">
-          <ProductTable />
+          <TransactionTable />
         </div>
       </div>
     </>

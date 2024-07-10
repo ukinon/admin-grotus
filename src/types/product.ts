@@ -1,8 +1,25 @@
 export type Product = {
-  image: string;
-  name: string;
-  category: string;
-  price: number;
-  sold: number;
-  profit: number;
+  id?: number;
+  name?: string;
+  price?: number;
+  variant?: string;
+  product_id?: number;
+  description?: string;
+  photo?: string;
+  stock?: number;
+  rating?: {
+    id: number;
+    user_id: number;
+    rating: number;
+  };
+  ratings_average?: number;
+  ratings_count?: number;
+  amount?: number;
+  loved?: boolean;
+  nutrition_types?: NutritionType[];
+};
+
+export type NutritionType = {
+  id?: number;
+  name?: string;
 };

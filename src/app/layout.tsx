@@ -6,6 +6,7 @@ import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { Poppins } from "next/font/google";
+import Providers from "./providers";
 const poppins = Poppins({ subsets: ["latin"], weight: "300" });
 
 export default function RootLayout({
@@ -30,7 +31,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning={true} className={poppins.className}>
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
-          {loading ? <Loader /> : children}
+          <Providers> {loading ? <Loader /> : children}</Providers>
         </div>
       </body>
     </html>

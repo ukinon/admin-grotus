@@ -1,16 +1,29 @@
 "use client";
-import React, { useState, ReactNode } from "react";
+import React, { useState, ReactNode, useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import NextAuth from "@auth-kit/next/NextAuth";
+import { axiosInstance } from "@/utils/axios";
+import useAuthHeader from "react-auth-kit/hooks/useAuthHeader";
+import useIsAuthenticated from "react-auth-kit/hooks/useIsAuthenticated";
 
 export default function DefaultLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const authHeader = useAuthHeader();
+  const isAuthenticated = useIsAuthenticated();
+
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      axiosInstance.defaults.headers.common["Authorization"] = authHeader;
+    }
+  }, [isAuthenticated]);
   return (
-    <>
+    <NextAuth fallbackPath="/auth/signin">
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex">
         {/* <!-- ===== Sidebar Start ===== --> */}
@@ -34,6 +47,6 @@ export default function DefaultLayout({
         {/* <!-- ===== Content Area End ===== --> */}
       </div>
       {/* <!-- ===== Page Wrapper End ===== --> */}
-    </>
+    </NextAuth>
   );
 }

@@ -1,106 +1,125 @@
-import Image from "next/image";
-import { Product } from "@/types/product";
+"use client";
 
-const productData: Product[] = [
-  {
-    image: "/images/product/product-01.png",
-    name: "Apple Watch Series 7",
-    category: "Electronics",
-    price: 296,
-    sold: 22,
-    profit: 45,
-  },
-  {
-    image: "/images/product/product-02.png",
-    name: "Macbook Pro M1",
-    category: "Electronics",
-    price: 546,
-    sold: 12,
-    profit: 125,
-  },
-  {
-    image: "/images/product/product-03.png",
-    name: "Dell Inspiron 15",
-    category: "Electronics",
-    price: 443,
-    sold: 64,
-    profit: 247,
-  },
-  {
-    image: "/images/product/product-04.png",
-    name: "HP Probook 450",
-    category: "Electronics",
-    price: 499,
-    sold: 72,
-    profit: 103,
-  },
-];
+import Image from "next/image";
+import { useGetQuery } from "@/hooks/queries/useGetQuery";
+import { getTransactions } from "@/api/transactions";
+import Loader from "../common/Loader";
+import DynamicPaginator from "./DynamicPaginator";
+import { formatToIDR } from "@/lib/formatToIDR";
+import { useState } from "react";
+import { PiPencil, PiTrash } from "react-icons/pi";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { useDelete } from "@/hooks/queries/useDeleteQuery";
+import LoadingPage from "../common/LoadingPage";
+import { Transaction } from "@/types/transaction";
+import { getNutritionTypes } from "@/api/nutritionTypes";
+import { NutritionType } from "@/types/product";
+
+export const pageQueryParams = "page";
 
 const NutritionTable = () => {
+  const [searchParams, setSearchParams] = useState(
+    new URLSearchParams(window.location.search),
+  );
+  const currentPage = parseInt(searchParams.get(pageQueryParams) || "1", 10);
+
+  const query = `?perPage=5&page=${currentPage}`;
+  const { data, isLoading } = useGetQuery({
+    queryFn: async () => await getNutritionTypes(query),
+    queryKey: ["get-nutrition-types", query],
+  });
+  const { deleteMutation, deleteIsPending } = useDelete({
+    path: "nutrition-types",
+    queryKey: [["get-nutrition-types"]],
+  });
+
+  const onPageChange = (page: number) => {
+    const newQueryParameters = new URLSearchParams(window.location.search);
+    newQueryParameters.set(pageQueryParams, page.toString());
+    setSearchParams(newQueryParameters);
+    window.history.pushState(null, "", `?${newQueryParameters.toString()}`);
+  };
+
+  const handleDelete = async (id: number) => {
+    await deleteMutation(id);
+  };
   return (
-    <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="px-4 py-6 md:px-6 xl:px-7.5">
-        <h4 className="text-xl font-semibold text-black dark:text-white">
-          Nutrition Types
-        </h4>
+    <div className="w-full rounded-sm border border-stroke bg-white pb-8 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <h1 className="text-xl font-bold">Nutrition Types</h1>
+      <div className="dark:bg-boxdark-2 dark:text-bodydark">
+        {isLoading && <Loader />}
+        {deleteIsPending && <LoadingPage />}
       </div>
-
-      <div className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5">
-        <div className="col-span-3 flex items-center">
-          <p className="font-medium">Product Name</p>
-        </div>
-        <div className="col-span-2 hidden items-center sm:flex">
-          <p className="font-medium">Category</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Price</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Sold</p>
-        </div>
-        <div className="col-span-1 flex items-center">
-          <p className="font-medium">Profit</p>
-        </div>
-      </div>
-
-      {productData.map((product, key) => (
-        <div
-          className="grid grid-cols-6 border-t border-stroke px-4 py-4.5 dark:border-strokedark sm:grid-cols-8 md:px-6 2xl:px-7.5"
-          key={key}
-        >
-          <div className="col-span-3 flex items-center">
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-              <div className="h-12.5 w-15 rounded-md">
-                <Image
-                  src={product.image}
-                  width={60}
-                  height={50}
-                  alt="Product"
-                />
-              </div>
-              <p className="text-sm text-black dark:text-white">
-                {product.name}
-              </p>
+      {!isLoading && (
+        <>
+          <div className="grid grid-cols-9 border-t border-stroke px-4 py-4.5 dark:border-strokedark  md:px-6 2xl:px-7.5">
+            <div className="col-span-8 flex items-center">
+              <p className="font-medium">Name</p>
+            </div>
+            <div className="col-span-1 flex items-center">
+              <p className="font-medium">Actions</p>
             </div>
           </div>
-          <div className="col-span-2 hidden items-center sm:flex">
-            <p className="text-sm text-black dark:text-white">
-              {product.category}
-            </p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-black dark:text-white">
-              ${product.price}
-            </p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-black dark:text-white">{product.sold}</p>
-          </div>
-          <div className="col-span-1 flex items-center">
-            <p className="text-sm text-meta-3">${product.profit}</p>
-          </div>
-        </div>
-      ))}
+
+          {data?.data.data.map((nutrition: NutritionType, key: number) => (
+            <div
+              className="grid grid-cols-9 border-t border-stroke px-4 py-4.5 text-xs dark:border-strokedark md:px-6 2xl:px-7.5"
+              key={key}
+            >
+              <div className="col-span-8 flex items-center">
+                <p className="text-xs text-black dark:text-white">
+                  {nutrition.name}
+                </p>
+              </div>
+
+              <div className="col-span-1 flex items-center">
+                <div className="flex flex-row gap-2">
+                  <PiPencil className="text-base text-blue-500" />
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <PiTrash className="text-base text-red" />
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          You will delete {nutrition.name}
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className="gap-3">
+                        <AlertDialogCancel className="bg-green-500 text-white">
+                          No
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => handleDelete(nutrition.id as number)}
+                          className="text-primary-500 border-primary-500 border"
+                        >
+                          Yes
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
+                </div>
+              </div>
+            </div>
+          ))}
+          <DynamicPaginator
+            totalPages={data?.data.last_page}
+            currentPage={currentPage}
+            onPageChange={onPageChange}
+          />
+        </>
+      )}
     </div>
   );
 };
