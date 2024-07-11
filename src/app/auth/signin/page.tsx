@@ -4,8 +4,7 @@ import { Metadata } from "next";
 import LoginForm from "./LoginForm";
 
 export const metadata: Metadata = {
-  title: "Next.js SignIn Page | Grotus Admin - Next.js Dashboard Template",
-  description: "This is Next.js Signin Page Grotus Admin Dashboard Template",
+  title: "Sign In Page | Grotus Admin",
 };
 
 const SignIn: React.FC = () => {
