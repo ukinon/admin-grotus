@@ -1,10 +1,7 @@
 import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { UseFormReturn, FieldValues, Path } from "react-hook-form";
-import {
-  RxEyeClosed,
-  RxEyeOpen,
-} from "react-icons/rx";
+import { RxEyeClosed, RxEyeOpen } from "react-icons/rx";
 import { useState } from "react";
 import React from "react";
 import { Button } from "../ui/button";
@@ -68,7 +65,7 @@ export default function FormInput<TFormValues extends FieldValues>({
                   <>
                     <Input
                       placeholder={placeholder}
-                      className="mx-1 rounded-none border-none text-xs placeholder:text-xs"
+                      className="mx-1 rounded-none border-none text-xs placeholder:text-xs dark:bg-boxdark"
                       type={type}
                       {...field}
                     />
@@ -127,7 +124,7 @@ export default function FormInput<TFormValues extends FieldValues>({
                   <>
                     <Input
                       placeholder={placeholder}
-                      className="mx-1 rounded-none border-none text-xs placeholder:text-xs"
+                      className="mx-1 rounded-none border-none text-xs placeholder:text-xs dark:bg-boxdark"
                       type={show ? "text" : "password"}
                       {...field}
                     />

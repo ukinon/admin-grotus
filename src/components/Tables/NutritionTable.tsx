@@ -54,8 +54,10 @@ const NutritionTable = () => {
     await deleteMutation(id);
   };
   return (
-    <div className="w-full rounded-sm border border-stroke bg-white pb-8 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <h1 className="text-xl font-bold">Nutrition Types</h1>
+    <div className="flex w-full flex-col gap-2 rounded-sm border border-stroke bg-white pb-8 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <h1 className="px-3 py-2 pt-5 text-2xl font-bold dark:text-white">
+        Nutrition Types
+      </h1>
       <div className="dark:bg-boxdark-2 dark:text-bodydark">
         {isLoading && <Loader />}
         {deleteIsPending && <LoadingPage />}
@@ -97,12 +99,12 @@ const NutritionTable = () => {
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter className="gap-3">
-                        <AlertDialogCancel className="bg-green-500 text-white">
+                        <AlertDialogCancel className="bg-green-500 text-black">
                           No
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => handleDelete(nutrition.id as number)}
-                          className="text-primary-500 border-primary-500 border"
+                          className="border border-primary bg-transparent text-primary"
                         >
                           Yes
                         </AlertDialogAction>

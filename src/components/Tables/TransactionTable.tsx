@@ -59,7 +59,7 @@ const TransactionTable = () => {
       </div>
       {!isLoading && (
         <>
-          <div className="grid grid-cols-9 border-t border-stroke px-4 py-4.5 dark:border-strokedark  md:px-6 2xl:px-7.5">
+          <div className="grid w-[200vw] grid-cols-9 border-t border-stroke px-4 py-4.5  dark:border-strokedark md:px-6 2xl:px-7.5">
             <div className="col-span-1 flex items-center">
               <p className="font-medium">User</p>
             </div>
@@ -94,11 +94,11 @@ const TransactionTable = () => {
                 </p>
               </div>
               <div className="col-span-2 flex flex-col gap-4 sm:flex-row sm:items-center">
-                <p className="text-xs text-black dark:text-white">
+                <p className="line-clamp-3 pr-8 text-xs text-black dark:text-white">
                   {transaction.address}
                 </p>
               </div>
-              <div className="col-span-2 hidden flex-row flex-wrap items-center gap-1 sm:flex">
+              <div className="col-span-2 hidden flex-row flex-wrap items-center gap-1 pr-3 sm:flex">
                 {transaction.products?.map((product, index, array) => (
                   <p key={index} className="text-xs text-black dark:text-white">
                     {product.name}
@@ -108,18 +108,18 @@ const TransactionTable = () => {
               </div>
 
               <div className="col-span-1 flex items-center">
-                <p className="text-xs text-black dark:text-white">
+                <p className="w-full text-xs text-black dark:text-white">
                   {transaction.payment_method}
                 </p>
               </div>
               <div className="col-span-1 flex items-center text-center">
                 <p className="text-xs text-black dark:text-white">
-                  {transaction.delivery_method}
+                  {transaction.delivery_method ?? "-"}
                 </p>
               </div>
               <div className="col-span-1 flex items-center text-center">
                 <p
-                  className={`line-clamp-1 rounded-full px-2 py-1 text-[0.7rem] text-black dark:text-white ${(transaction.status == "Completed" && "bg-green-400") || (transaction.status == "Waiting For Payment" && "bg-red text-white") || (transaction.status == "Shipped" && "bg-yellow-400")}`}
+                  className={`line-clamp-1 w-5/6 rounded-full px-2 py-1 text-[0.7rem] text-black ${(transaction.status == "Completed" && "bg-green-400") || (transaction.status == "Waiting For Payment" && "bg-red text-white") || (transaction.status == "Shipped" && "bg-yellow-400 text-black")}`}
                 >
                   {transaction.status}
                 </p>
@@ -139,12 +139,12 @@ const TransactionTable = () => {
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter className="gap-3">
-                        <AlertDialogCancel className="bg-green-500 text-white">
+                        <AlertDialogCancel className="bg-green-500 text-black">
                           No
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => handleDelete(transaction.id as number)}
-                          className="text-primary-500 border-primary-500 border"
+                          className="border border-primary bg-transparent text-primary"
                         >
                           Yes
                         </AlertDialogAction>

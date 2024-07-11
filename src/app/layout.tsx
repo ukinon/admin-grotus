@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import { Poppins } from "next/font/google";
 import Providers from "./providers";
+import { Toaster } from "@/components/ui/toaster";
 const poppins = Poppins({ subsets: ["latin"], weight: "300" });
 
 export default function RootLayout({
@@ -33,6 +34,7 @@ export default function RootLayout({
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
           <Providers> {loading ? <Loader /> : children}</Providers>
         </div>
+        <Toaster />
       </body>
     </html>
   );

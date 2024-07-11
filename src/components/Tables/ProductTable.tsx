@@ -90,28 +90,29 @@ const ProductTable = () => {
                         (product.photo as string) ||
                         "https://via.placeholder.com/150"
                       }
-                      width={60}
+                      width={50}
                       height={50}
                       alt="Product"
+                      className="rounded-lg"
                     />
                   </div>
-                  <p className="text-sm text-black dark:text-white">
+                  <p className="text-xs text-black dark:text-white">
                     {product.name}
                   </p>
                 </div>
               </div>
               <div className="col-span-3 hidden items-center sm:flex">
-                <p className="text-sm text-black dark:text-white">
+                <p className="line-clamp-3 pr-12 text-xs text-black dark:text-white">
                   {product.description}
                 </p>
               </div>
               <div className="col-span-1 flex items-center">
-                <p className="text-sm text-black dark:text-white">
+                <p className="text-xs text-black dark:text-white">
                   {formatToIDR(product.price as number)}
                 </p>
               </div>
               <div className="col-span-1 flex items-center text-center">
-                <p className="text-sm text-black dark:text-white">
+                <p className="text-xs text-black dark:text-white">
                   {product.stock}
                 </p>
               </div>
@@ -130,12 +131,12 @@ const ProductTable = () => {
                         </AlertDialogDescription>
                       </AlertDialogHeader>
                       <AlertDialogFooter className="gap-3">
-                        <AlertDialogCancel className="bg-green-500 text-white">
+                        <AlertDialogCancel className="bg-green-500 text-black">
                           No
                         </AlertDialogCancel>
                         <AlertDialogAction
                           onClick={() => handleDelete(product.id as number)}
-                          className="text-primary-500 border-primary-500 border"
+                          className="border border-primary bg-transparent text-primary"
                         >
                           Yes
                         </AlertDialogAction>
