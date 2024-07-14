@@ -1,17 +1,25 @@
 import { toast } from "@/components/ui/use-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 
-type Props = {
-  mutationFn: (args: unknown) => Promise<AxiosResponse>;
+type Props<T> = {
+  mutationFn: (values: T) => Promise<AxiosResponse>;
   successMessage: string;
+  queryKey: [string, number?];
 };
 
-export function usePostQuery({ mutationFn, successMessage }: Props) {
+export function usePostQuery<T>({
+  mutationFn,
+  successMessage,
+  queryKey,
+}: Props<T>) {
+  const queryClient = useQueryClient();
   const { mutateAsync, isPending, isSuccess, data } = useMutation({
-    mutationFn: (args: unknown) => mutationFn(args),
+    mutationFn: mutationFn,
 
     onSuccess: () => {
+      console.log(queryKey);
+      queryClient.invalidateQueries({ queryKey: queryKey });
       toast({
         title: "Yay!",
         description: successMessage,

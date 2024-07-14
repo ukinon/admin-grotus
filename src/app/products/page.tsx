@@ -3,6 +3,8 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import ProductTable from "@/components/Tables/ProductTable";
+import FormButton from "@/components/ui/form-button";
+import ProductForm from "@/components/Forms/ProductForm";
 
 export const metadata: Metadata = {
   title: "Products | Grotus Admin",
@@ -15,7 +17,14 @@ const ProductsPage = () => {
     <DefaultLayout>
       <Breadcrumb pageName="Products" />
 
-      <div className="flex h-screen flex-col gap-10">
+      <div className="flex h-screen w-full flex-col gap-5">
+        <div className="w-1/6 self-end">
+          <FormButton
+            buttonText="Add Product"
+            dialogTItle="Add Product"
+            dialogContent={<ProductForm />}
+          />
+        </div>
         <ProductTable />
       </div>
     </DefaultLayout>

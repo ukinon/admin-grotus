@@ -24,6 +24,8 @@ import LoadingPage from "../common/LoadingPage";
 import { Transaction } from "@/types/transaction";
 import { getNutritionTypes } from "@/api/nutritionTypes";
 import { NutritionType } from "@/types/product";
+import FormButton from "../ui/form-button";
+import NutritionForm from "../Forms/NutritionForm";
 
 export const pageQueryParams = "page";
 
@@ -55,9 +57,18 @@ const NutritionTable = () => {
   };
   return (
     <div className="flex w-full flex-col gap-2 rounded-sm border border-stroke bg-white pb-8 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <h1 className="px-3 py-2 pt-5 text-2xl font-bold dark:text-white">
-        Nutrition Types
-      </h1>
+      <div className="flex flex-row items-center justify-between px-5 pt-5">
+        <h1 className="text-2xl font-bold dark:text-white">Nutrition Types</h1>
+
+        <div className="w-1/6 self-end">
+          <FormButton
+            buttonText="Add Nutrition"
+            dialogTItle="Add Nutrition"
+            dialogContent={<NutritionForm />}
+          />
+        </div>
+      </div>
+
       <div className="dark:bg-boxdark-2 dark:text-bodydark">
         {isLoading && <Loader />}
         {deleteIsPending && <LoadingPage />}
@@ -86,7 +97,12 @@ const NutritionTable = () => {
 
               <div className="col-span-1 flex items-center">
                 <div className="flex flex-row gap-2">
-                  <PiPencil className="text-base text-blue-500" />
+                  <FormButton
+                    buttonText={<PiPencil className="text-blue-500" />}
+                    dialogContent={<NutritionForm data={nutrition} />}
+                    dialogTItle="Edit Nutrition"
+                    variant="ghost"
+                  />{" "}
                   <AlertDialog>
                     <AlertDialogTrigger>
                       <PiTrash className="text-base text-red" />

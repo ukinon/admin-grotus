@@ -71,7 +71,7 @@ function Calendar({
                 IconRight: () => <BiChevronRight className="h-4 w-4" />,
                 Caption: () => {
                   const months = Array.from({ length: 12 }, (_, i) =>
-                    new Date(0, i).toLocaleDateString("id-ID", {
+                    new Date(0, i).toLocaleDateString("en-EN", {
                       month: "long",
                     }),
                   );
@@ -179,7 +179,7 @@ function Calendar({
               components={{
                 Caption: () => {
                   const months = Array.from({ length: 12 }, (_, i) =>
-                    new Date(0, i).toLocaleDateString("id-ID", {
+                    new Date(0, i).toLocaleDateString("en-EN", {
                       month: "long",
                     }),
                   );

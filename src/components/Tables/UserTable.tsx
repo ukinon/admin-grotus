@@ -24,6 +24,8 @@ import { useDelete } from "@/hooks/queries/useDeleteQuery";
 import LoadingPage from "../common/LoadingPage";
 import { getUsers } from "@/api/users";
 import { User } from "@/types/user";
+import UserForm from "../Forms/UserForm";
+import FormButton from "../ui/form-button";
 
 export const pageQueryParams = "page";
 
@@ -120,7 +122,12 @@ const UserTable = () => {
               </div>
               <div className="col-span-1 flex items-center">
                 <div className="flex flex-row gap-2">
-                  <PiPencil className="text-blue-500" />
+                  <FormButton
+                    buttonText={<PiPencil className="text-blue-500" />}
+                    dialogContent={<UserForm data={user} />}
+                    dialogTItle="Edit User"
+                    variant="ghost"
+                  />
                   <AlertDialog>
                     <AlertDialogTrigger>
                       <PiTrash className="text-red" />

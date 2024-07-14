@@ -25,6 +25,7 @@ export default function LoginForm() {
   const { data, isPending, isSuccess, mutateAsync } = usePostQuery({
     mutationFn: () => login(form.getValues()),
     successMessage: "Login berhasil",
+    queryKey: ["get-current-user"],
   });
   const signIn = useSignIn();
 

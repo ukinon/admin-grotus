@@ -22,6 +22,8 @@ import {
 } from "../ui/alert-dialog";
 import { useDelete } from "@/hooks/queries/useDeleteQuery";
 import LoadingPage from "../common/LoadingPage";
+import FormButton from "../ui/form-button";
+import ProductForm from "../Forms/ProductForm";
 
 export const pageQueryParams = "page";
 
@@ -118,7 +120,12 @@ const ProductTable = () => {
               </div>
               <div className="col-span-1 flex items-center">
                 <div className="flex flex-row gap-2">
-                  <PiPencil className="text-blue-500" />
+                  <FormButton
+                    buttonText={<PiPencil className="text-blue-500" />}
+                    dialogContent={<ProductForm data={product} />}
+                    dialogTItle="Edit Product"
+                    variant="ghost"
+                  />
                   <AlertDialog>
                     <AlertDialogTrigger>
                       <PiTrash className="text-red" />

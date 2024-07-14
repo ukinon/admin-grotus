@@ -1,13 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useGetQuery } from "@/hooks/queries/useGetQuery";
 import { getTransactions } from "@/api/transactions";
 import Loader from "../common/Loader";
 import DynamicPaginator from "./DynamicPaginator";
-import { formatToIDR } from "@/lib/formatToIDR";
 import { useState } from "react";
-import { PiPencil, PiTrash } from "react-icons/pi";
+import { PiTrash } from "react-icons/pi";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -59,7 +57,7 @@ const TransactionTable = () => {
       </div>
       {!isLoading && (
         <>
-          <div className="grid w-[200vw] grid-cols-9 border-t border-stroke px-4 py-4.5  dark:border-strokedark md:px-6 2xl:px-7.5">
+          <div className="grid w-full grid-cols-9 border-t border-stroke px-4 py-4.5  dark:border-strokedark md:px-6 2xl:px-7.5">
             <div className="col-span-1 flex items-center">
               <p className="font-medium">User</p>
             </div>
@@ -69,7 +67,7 @@ const TransactionTable = () => {
             <div className="col-span-2 flex items-center">
               <p className="font-medium">Products</p>
             </div>
-            <div className="col-span-1 hidden items-center sm:flex">
+            <div className="col-span-1 items-center sm:flex">
               <p className="font-medium">Payment</p>
             </div>
             <div className="col-span-1 hidden items-center sm:flex">
@@ -125,8 +123,7 @@ const TransactionTable = () => {
                 </p>
               </div>
               <div className="col-span-1 flex items-center">
-                <div className="flex flex-row gap-2">
-                  <PiPencil className="text-base text-blue-500" />
+                <div className="flex w-full flex-row gap-2">
                   <AlertDialog>
                     <AlertDialogTrigger>
                       <PiTrash className="text-base text-red" />

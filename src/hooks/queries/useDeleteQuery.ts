@@ -32,6 +32,7 @@ export const useDelete = ({
       toast({
         title: "Oops!",
         description: "Gagal hapus",
+        variant: "destructive",
       });
     },
   });

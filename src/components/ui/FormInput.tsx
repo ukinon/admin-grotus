@@ -8,6 +8,8 @@ import { Button } from "../ui/button";
 import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "./popover";
+import { Label } from "./label";
+import { BiCalendar } from "react-icons/bi";
 
 // Update the Props definition to ensure TFormValues extends FieldValues
 type Props<TFormValues extends FieldValues> = {
@@ -40,12 +42,16 @@ export default function FormInput<TFormValues extends FieldValues>({
   label,
   min,
   max,
+  required,
+  isCurrency,
 }: Props<TFormValues>) {
   const [show, setShow] = useState(false);
 
-  const updatedIcon = React.cloneElement(icon as React.ReactElement, {
-    className: `text-lg`,
-  });
+  const updatedIcon = icon
+    ? React.cloneElement(icon as React.ReactElement, {
+        className: `text-lg`,
+      })
+    : null;
 
   return (
     <FormField
@@ -55,13 +61,26 @@ export default function FormInput<TFormValues extends FieldValues>({
         <FormItem className="w-full invalid:text-2xl">
           <FormControl>
             <div
-              className={`w-full ${
+              className={`grid w-full ${
                 type == "textarea" ? "items-start" : "items-center"
-              }  `}
+              } grid-cols-12 `}
             >
-              <div className="flex w-full flex-row items-center rounded-lg border border-zinc-500 px-3">
-                {updatedIcon}
-                {type != "password" && type != "date" && (
+              {label && (
+                <>
+                  <Label className="col-span-3 pr-3 text-[55%] font-bold md:text-sm">
+                    {label}{" "}
+                    {required ? <span className="text-red">*</span> : ""}{" "}
+                  </Label>
+                  <p className="col-span-1">:</p>
+                </>
+              )}
+              <div
+                className={`${label ? "col-span-8" : "col-span-12"} flex w-full flex-row items-center rounded-lg border border-zinc-500 px-3`}
+              >
+                {updatedIcon ? updatedIcon : null}
+                {isCurrency && <span className="text-sm">Rp</span>}
+                {type == "date" && <BiCalendar />}
+                {type != "password" && type != "date" && type != "textarea" && (
                   <>
                     <Input
                       placeholder={placeholder}
@@ -78,19 +97,18 @@ export default function FormInput<TFormValues extends FieldValues>({
                         variant={"outline"}
                         className={cn(
                           "w-full  justify-start rounded-none border-none text-left text-xs font-normal disabled:bg-zinc-100 disabled:opacity-100",
-                          !form.getValues(field.name) &&
-                            "text-muted-foreground",
+                          !form.getValues(field.name) && "text-black",
                         )}
                         disabled={disabled}
                       >
                         {field.value ? (
-                          new Date(field.value).toLocaleDateString("id-ID", {
+                          new Date(field.value).toLocaleDateString("en-EN", {
                             day: "numeric",
                             month: "long",
                             year: "numeric",
                           })
                         ) : (
-                          <span>{placeholder}</span>
+                          <span>Choose date</span>
                         )}
                       </Button>
                     </PopoverTrigger>
@@ -141,16 +159,16 @@ export default function FormInput<TFormValues extends FieldValues>({
                     )}
                   </>
                 )}
+                {type == "textarea" && (
+                  <textarea
+                    disabled={disabled}
+                    className={`col-span-4 mr-[1px] h-[18vh] w-full resize-none rounded-sm border border-none  px-3 py-2 text-[55%] focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 disabled:bg-zinc-100 md:text-xs ${className}`}
+                    {...field}
+                  >
+                    {field.value}
+                  </textarea>
+                )}
               </div>
-              {type == "textarea" && (
-                <textarea
-                  disabled={disabled}
-                  className={`col-span-4 mr-[1px] h-[18vh] w-full resize-none rounded-sm border border-zinc-400 border-opacity-55 px-3 py-2 text-[55%] disabled:bg-zinc-100 md:text-xs ${className}`}
-                  {...field}
-                >
-                  {field.value}
-                </textarea>
-              )}
             </div>
           </FormControl>
 

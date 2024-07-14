@@ -16,7 +16,8 @@ export type Product = {
   ratings_count?: number;
   amount?: number;
   loved?: boolean;
-  nutrition_types?: NutritionType[];
+  nutrition_types?: NutritionType[] | number[];
+  images?: File[] | Blob[] | MediaSource[] | null;
 };
 
 export type NutritionType = {
