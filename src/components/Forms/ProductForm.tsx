@@ -65,7 +65,11 @@ export default function ProductForm({ data, disabled }: Props) {
     mutateAsync: updateProductMutation,
     isPending: updateProductPending,
   } = usePostQuery({
-    mutationFn: async (values: Product) => await updateProduct(values),
+    mutationFn: async (values: Product) =>
+      await updateProduct({
+        id: data?.id,
+        ...values,
+      }),
     successMessage: "Product updated successfully",
     queryKey: ["get-products"],
   });

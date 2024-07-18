@@ -51,8 +51,12 @@ export default function UserForm({ data, disabled }: Props) {
 
   const { mutateAsync: updateUserMutation, isPending: updateUserPending } =
     usePostQuery({
-      mutationFn: async (values: User) => await updateUser(values),
-      successMessage: "Product updated successfully",
+      mutationFn: async (values: User) =>
+        await updateUser({
+          id: data?.id,
+          ...values,
+        }),
+      successMessage: "User updated successfully",
       queryKey: ["get-users"],
     });
 

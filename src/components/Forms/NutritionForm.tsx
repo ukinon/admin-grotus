@@ -36,7 +36,10 @@ export default function NutritionForm({ data, disabled }: Props) {
     isPending: updateNutritionPending,
   } = usePostQuery({
     mutationFn: async (values: NutritionType) =>
-      await updateNutritionType(values),
+      await updateNutritionType({
+        id: data?.id,
+        ...values,
+      }),
     successMessage: "Nutrition Type updated successfully",
     queryKey: ["get-nutrition-types"],
   });
